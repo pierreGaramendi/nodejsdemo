@@ -10,4 +10,16 @@ const sequelize = new Sequelize(
   }
 );
 
-module.exports = sequelize;
+const conectarBD = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Conexión exitosa a la base de datos");
+  } catch (error) {
+    console.error("Error al conectar a la base de datos:", error);
+  }
+};
+
+module.exports = {
+  sequelizeInstance: sequelize,
+  conectarBDSqualize: conectarBD,
+};

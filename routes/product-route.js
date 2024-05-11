@@ -1,28 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const customerCreated = require("./mock/customer-created");
-const customer = require("./mock/customer-by-id");
-const customerUpdated = require("./mock/customer-updated");
-const customerDeleted = require("./mock/customer-deleted");
-
-const customerListHandler = require("./controllers/customer-controller")
+const customerListHandler = require("../controllers/customer-controller");
 
 customerByIdHandler = (request, response, next) => {
   const id = request.params.id;
-  if (id == 2) {
-    response.status(200).json(customer);
-  } else {
-    response.status(400).json({});
-  }
+  response.status(200).json({});
 };
 customerCreatedHandler = (request, response, next) => {
-  response.status(200).json(customerCreated);
+  response.status(200).json({});
 };
 customerUpdatedHandler = (request, response, next) => {
-  response.status(200).json(customerUpdated);
+  response.status(200).json({});
 };
 customerDeletedHandler = (request, response, next) => {
-  response.status(200).json(customerDeleted);
+  response.status(200).json({});
 };
 
 router.get("/", customerListHandler);

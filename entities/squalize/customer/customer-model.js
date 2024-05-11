@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
-const sequelize = require("../../../frameworks/db/squalize-connection"); // Importamos la instancia de Sequelize configurada
-
-const Usuario = sequelize.define(
+const sequelizeModule = require("../../../frameworks/db/squalize-connection"); // Importamos la instancia de Sequelize configurada
+const sequelizeInstance = sequelizeModule.sequelizeInstance;
+const Usuario = sequelizeInstance.define(
   "Customers",
   {
     CustomerID: {
@@ -36,7 +36,7 @@ const Usuario = sequelize.define(
     },
   },
   {
-    sequelize,
+    sequelizeInstance,
     tableName: "Customers",
     timestamps: false,
     indexes: [
