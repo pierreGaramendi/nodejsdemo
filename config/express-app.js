@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 
-const customerRoute = require("./routes/customer-route");
-const productRoute = require("./routes/product-route");
+const customerRoute = require("../routes/customer-route");
+const productRoute = require("../routes/product-route");
 
 app.get("/", (request, response) => {
   response.send({ title: "hellloooo" });

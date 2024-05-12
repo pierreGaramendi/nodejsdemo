@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Categories {
+  CategoryID   Int        @id @default(autoincrement())
+  CategoryName String?    @db.VarChar(25)
+  Description  String?    @db.VarChar(255)
+  Products     Products[]
+}
+
+model Customers {
+  CustomerID   Int      @id @default(autoincrement())
+  CustomerName String?  @db.VarChar(50)
+  ContactName  String?  @db.VarChar(50)
+  Address      String?  @db.VarChar(50)
+  City         String?  @db.VarChar(20)
+  PostalCode   String?  @db.VarChar(10)
+  Country      String?  @db.VarChar(15)
+  Orders       Orders[]
+}
+
+model Employees {
+  EmployeeID Int       @id @default(autoincrement())
+  LastName   String?   @db.VarChar(15)
+  FirstName  String?   @db.VarChar(15)
+  BirthDate  DateTime? @db.DateTime(0)
+  Photo      String?   @db.VarChar(25)
+  Notes      String?   @db.VarChar(1024)
+  Orders     Orders[]
+}
+
+model OrderDetails {
+  OrderDetailID Int       @id @default(autoincrement())
+  OrderID       Int?
+  ProductID     Int?
+  Quantity      Int?
+  Orders        Orders?   @relation(fields: [OrderID], references: [OrderID], onDelete: NoAction, onUpdate: NoAction, map: "OrderDetails_ibfk_1")
+  Products      Products? @relation(fields: [ProductID], references: [ProductID], onDelete: NoAction, onUpdate: NoAction, map: "OrderDetails_ibfk_2")
+
+  @@index([OrderID], map: "OrderID")
+  @@index([ProductID], map: "ProductID")
+}
+
+model Orders {
+  OrderID      Int            @id @default(autoincrement())
+  CustomerID   Int?
+  EmployeeID   Int?
+  OrderDate    DateTime?      @db.DateTime(0)
+  ShipperID    Int?
+  OrderDetails OrderDetails[]
+  Employees    Employees?     @relation(fields: [EmployeeID], references: [EmployeeID], onDelete: NoAction, onUpdate: NoAction, map: "Orders_ibfk_1")
+  Customers    Customers?     @relation(fields: [CustomerID], references: [CustomerID], onDelete: NoAction, onUpdate: NoAction, map: "Orders_ibfk_2")
+  Shippers     Shippers?      @relation(fields: [ShipperID], references: [ShipperID], onDelete: NoAction, onUpdate: NoAction, map: "Orders_ibfk_3")
+
+  @@index([CustomerID], map: "CustomerID")
+  @@index([EmployeeID], map: "EmployeeID")
+  @@index([ShipperID], map: "ShipperID")
+}
+
+model Products {
+  ProductID    Int            @id @default(autoincrement())
+  ProductName  String?        @db.VarChar(50)
+  SupplierID   Int?
+  CategoryID   Int?
+  Unit         String?        @db.VarChar(25)
+  Price        Decimal?       @db.Decimal(10, 0)
+  OrderDetails OrderDetails[]
+  Categories   Categories?    @relation(fields: [CategoryID], references: [CategoryID], onDelete: NoAction, onUpdate: NoAction, map: "Products_ibfk_1")
+  Suppliers    Suppliers?     @relation(fields: [SupplierID], references: [SupplierID], onDelete: NoAction, onUpdate: NoAction, map: "Products_ibfk_2")
+
+  @@index([CategoryID], map: "CategoryID")
+  @@index([SupplierID], map: "SupplierID")
+}
+
+model Shippers {
+  ShipperID   Int      @id @default(autoincrement())
+  ShipperName String?  @db.VarChar(25)
+  Phone       String?  @db.VarChar(15)
+  Orders      Orders[]
+}
+
+model Suppliers {
+  SupplierID   Int        @id @default(autoincrement())
+  SupplierName String?    @db.VarChar(50)
+  ContactName  String?    @db.VarChar(50)
+  Address      String?    @db.VarChar(50)
+  City         String?    @db.VarChar(20)
+  PostalCode   String?    @db.VarChar(10)
+  Country      String?    @db.VarChar(15)
+  Phone        String?    @db.VarChar(15)
+  Products     Products[]
+}
