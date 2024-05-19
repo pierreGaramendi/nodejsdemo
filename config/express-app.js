@@ -1,14 +1,13 @@
 const express = require("express");
 const app = express();
-
-const customerRoute = require("../routes/customer-route");
-const productRoute = require("../routes/product-route");
+const eventRoute = require("../routes/event-route");
 
 app.get("/", (request, response) => {
-  response.send({ title: "hellloooo" });
+  response.send({ title: "Kalendar App" });
 });
 
-app.use("/customer", customerRoute);
-app.use("/product", productRoute);
+app.use("/event", eventRoute);
+
+app.use(express.json());
 
 module.exports = app;

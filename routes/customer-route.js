@@ -5,8 +5,8 @@ const customer = require("../mock/customer-by-id");
 const customerUpdated = require("../mock/customer-updated");
 const customerDeleted = require("../mock/customer-deleted");
 
-const customerListHandler = require("../controllers/customer-controller")
-const getAllCustomersPrisma = require("../controllers/customer-controller-prisma")
+
+const getAllCustomersPrisma = require("../controllers/customer/customer-controller-fs")
 
 customerByIdHandler = (request, response, next) => {
   const id = request.params.id;
@@ -26,7 +26,7 @@ customerDeletedHandler = (request, response, next) => {
   response.status(200).json(customerDeleted);
 };
 
-//router.get("/", customerListHandler);
+
 router.get("/", getAllCustomersPrisma);
 router.get("/:id", customerByIdHandler);
 router.post("/", customerCreatedHandler);

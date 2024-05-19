@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const customerListHandler = require("../controllers/customer-controller");
+//const customerListHandler = require("../../controllers/customer-controller-squalize");
+const customerListHandler = require("../controllers/customer/customer-controller-squalize");
 
 customerByIdHandler = (request, response, next) => {
   const id = request.params.id;

@@ -1,4 +1,4 @@
-const CustomerModel = require("../entities/squalize/customer/customer-model");
+const CustomerModel = require("../../entities/squalize/customer/customer-model");
 
 customerListHandler = (request, response, next) => {
   CustomerModel.findAll()
